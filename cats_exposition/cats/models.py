@@ -9,7 +9,7 @@ User = get_user_model()
 class Breed(models.Model):
     """Порода."""
 
-    name = models.CharField("Название породы", max_length=150)
+    name = models.CharField("Название породы", max_length=150, unique=True)
 
     class Meta:
         verbose_name = "Порода"
