@@ -5,6 +5,8 @@ from rest_framework import serializers
 
 
 class BreedSerializer(serializers.ModelSerializer):
+    """Сериализатор пород котиков."""
+
     class Meta:
         model = Breed
         fields = (
@@ -14,6 +16,8 @@ class BreedSerializer(serializers.ModelSerializer):
 
 
 class CatSerializer(serializers.ModelSerializer):
+    """Сериализатор котиков."""
+
     breed = serializers.SlugRelatedField(
         queryset=Breed.objects.all(), slug_field="name"
     )
@@ -34,6 +38,7 @@ class CatSerializer(serializers.ModelSerializer):
         )
 
     def get_age(self, obj: Cat):
+        """Возвращает возраст котика в месяцах."""
         today = date.today()
         birth_date = obj.birth_date
         years_diff = today.year - birth_date.year
