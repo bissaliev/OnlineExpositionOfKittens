@@ -1,12 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import BreedViewSet, CatViewSet
+from .views import BreedViewSet, CatViewSet, RatingViewSet
 
 app_name = "api"
 
 router = DefaultRouter()
 
+router.register(r"cats/(?P<cat_id>[\d]+)/rating", RatingViewSet)
 router.register("cats", CatViewSet, basename="cat")
 router.register("breeds", BreedViewSet, basename="breed")
 
