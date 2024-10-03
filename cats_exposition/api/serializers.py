@@ -1,6 +1,6 @@
 from datetime import date
 
-from cats.models import Breed, Cat
+from cats.models import Breed, Cat, Rating
 from rest_framework import serializers
 
 
@@ -9,20 +9,16 @@ class BreedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Breed
-        fields = (
-            "id",
-            "name",
-        )
+        fields = ("name",)
 
 
-class CatSerializer(serializers.ModelSerializer):
-    """Сериализатор котиков."""
+class BaseCatSerializer(serializers.ModelSerializer):
+    """Базовый сериализатор для котиков."""
 
     breed = serializers.SlugRelatedField(
         queryset=Breed.objects.all(), slug_field="name"
     )
     owner = serializers.SlugRelatedField(read_only=True, slug_field="username")
-    age = serializers.SerializerMethodField()
 
     class Meta:
         model = Cat
@@ -30,12 +26,26 @@ class CatSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "color",
-            "owner",
             "breed",
-            "birth_date",
             "description",
-            "age",
+            "owner",
         )
+
+
+class CatCreateSerializer(BaseCatSerializer):
+    """Сериализатор для создания котиков."""
+
+    class Meta(BaseCatSerializer.Meta):
+        fields = BaseCatSerializer.Meta.fields + ("birth_date",)
+
+
+class CatSerializer(BaseCatSerializer):
+    """Сериализатор котиков."""
+
+    age = serializers.SerializerMethodField()
+
+    class Meta(BaseCatSerializer.Meta):
+        fields = BaseCatSerializer.Meta.fields + ("age",)
 
     def get_age(self, obj: Cat):
         """Возвращает возраст котика в месяцах."""
@@ -47,3 +57,28 @@ class CatSerializer(serializers.ModelSerializer):
         if today.day < birth_date.day:
             total_month -= 1
         return total_month
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    """Сериализатор для рейтинга котиков."""
+
+    cat = serializers.SlugRelatedField(read_only=True, slug_field="name")
+    user = serializers.SlugRelatedField(read_only=True, slug_field="username")
+
+    class Meta:
+        model = Rating
+        fields = (
+            "id",
+            "cat",
+            "user",
+            "score",
+        )
+
+    def create(self, validated_data):
+        cat = validated_data.get("cat")
+        user = self.context.get("request").user
+        if user == cat.owner:
+            raise serializers.ValidationError(
+                "Нельзя оценивать своего котика!"
+            )
+        return super().create(validated_data)
