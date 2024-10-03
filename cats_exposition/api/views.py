@@ -7,7 +7,7 @@ from rest_framework.permissions import SAFE_METHODS
 from rest_framework.viewsets import ModelViewSet
 
 from .filters import CatFilter
-from .permissions import AuthorOrReadOnly, OwnerOrReadOnly
+from .permissions import AuthorOrReadOnly, IsAdminOrReadOnly, OwnerOrReadOnly
 from .serializers import (
     BreedSerializer,
     CatCreateSerializer,
@@ -22,7 +22,11 @@ class CatViewSet(ModelViewSet):
     """ViewSet для работы с котиками."""
 
     queryset = Cat.objects.annotate(
-        rating_avg=Coalesce(Avg("ratings"), 0, output_field=IntegerField())
+        rating_avg=Coalesce(
+            Avg("ratings__score", distinct=True),
+            0,
+            output_field=IntegerField(),
+        )
     )
     serializer_class = CatSerializer
     permission_classes = (OwnerOrReadOnly,)
@@ -44,6 +48,7 @@ class BreedViewSet(ModelViewSet):
     # TODO Проверка работы пермишена
     queryset = Breed.objects.all()
     serializer_class = BreedSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
 
 class RatingViewSet(ModelViewSet):
