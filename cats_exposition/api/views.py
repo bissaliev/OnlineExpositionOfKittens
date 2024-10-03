@@ -1,4 +1,6 @@
 from cats.models import Breed, Cat, Rating
+from django.db.models import Avg, IntegerField
+from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import SAFE_METHODS
@@ -13,11 +15,15 @@ from .serializers import (
     RatingSerializer,
 )
 
+# TODO Оптимизация ORM-запросов
+
 
 class CatViewSet(ModelViewSet):
     """ViewSet для работы с котиками."""
 
-    queryset = Cat.objects.all()
+    queryset = Cat.objects.annotate(
+        rating_avg=Coalesce(Avg("ratings"), 0, output_field=IntegerField())
+    )
     serializer_class = CatSerializer
     permission_classes = (OwnerOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
@@ -35,6 +41,7 @@ class CatViewSet(ModelViewSet):
 class BreedViewSet(ModelViewSet):
     """ViewSet для работы с породами котиков."""
 
+    # TODO Проверка работы пермишена
     queryset = Breed.objects.all()
     serializer_class = BreedSerializer
 
@@ -46,7 +53,7 @@ class RatingViewSet(ModelViewSet):
 
     def get_queryset(self):
         cat = get_object_or_404(Cat, pk=self.kwargs.get("cat_id"))
-        return super().get_queryset().filter(cat=cat)
+        return cat.ratings.all()
 
     def perform_create(self, serializer):
         cat = get_object_or_404(Cat, pk=self.kwargs.get("cat_id"))
