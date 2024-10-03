@@ -12,3 +12,16 @@ class OwnerOrReadOnly(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return request.method in SAFE_METHODS or request.user == obj.owner
+
+
+class AuthorOrReadOnly(BasePermission):
+    """
+    Права доступа на изменение только для владельца котика,
+    для других только чтение.
+    """
+
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS or request.user.is_authenticated
+
+    def has_object_permission(self, request, view, obj):
+        return request.method in SAFE_METHODS or request.user == obj.user
