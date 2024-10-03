@@ -9,7 +9,10 @@ class BreedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Breed
-        fields = ("name",)
+        fields = (
+            "id",
+            "name",
+        )
 
 
 class BaseCatSerializer(serializers.ModelSerializer):
@@ -18,7 +21,11 @@ class BaseCatSerializer(serializers.ModelSerializer):
     breed = serializers.SlugRelatedField(
         queryset=Breed.objects.all(), slug_field="name"
     )
-    owner = serializers.SlugRelatedField(read_only=True, slug_field="username")
+    owner = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field="username",
+        default=serializers.CurrentUserDefault(),
+    )
 
     class Meta:
         model = Cat
@@ -37,15 +44,23 @@ class CatCreateSerializer(BaseCatSerializer):
 
     class Meta(BaseCatSerializer.Meta):
         fields = BaseCatSerializer.Meta.fields + ("birth_date",)
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=Cat.objects.all(),
+                fields=("name", "owner"),
+                message="У вас есть уже такой котик, зачем вам второй!",
+            )
+        ]
 
 
 class CatSerializer(BaseCatSerializer):
     """Сериализатор котиков."""
 
     age = serializers.SerializerMethodField()
+    rating = serializers.IntegerField(source="rating_avg")
 
     class Meta(BaseCatSerializer.Meta):
-        fields = BaseCatSerializer.Meta.fields + ("age",)
+        fields = BaseCatSerializer.Meta.fields + ("age", "rating")
 
     def get_age(self, obj: Cat):
         """Возвращает возраст котика в месяцах."""
@@ -74,11 +89,13 @@ class RatingSerializer(serializers.ModelSerializer):
             "score",
         )
 
-    def create(self, validated_data):
+    def create(self, validated_data):  # TODO Убрать дублирование исключения
         cat = validated_data.get("cat")
         user = self.context.get("request").user
         if user == cat.owner:
             raise serializers.ValidationError(
                 "Нельзя оценивать своего котика!"
             )
+        if Rating.objects.filter(cat=cat, user=user).exists():
+            raise serializers.ValidationError("Вы уже оценили данного котика!")
         return super().create(validated_data)
