@@ -1,7 +1,7 @@
-from datetime import date
-
 from cats.models import Breed, Cat, Rating
 from rest_framework import serializers
+
+from .utils import calculating_age_in_months
 
 
 class BreedSerializer(serializers.ModelSerializer):
@@ -64,14 +64,9 @@ class CatSerializer(BaseCatSerializer):
 
     def get_age(self, obj: Cat):
         """Возвращает возраст котика в месяцах."""
-        today = date.today()
         birth_date = obj.birth_date
-        years_diff = today.year - birth_date.year
-        months_diff = today.month - birth_date.month
-        total_month = years_diff * 12 + months_diff
-        if today.day < birth_date.day:
-            total_month -= 1
-        return total_month
+        age = calculating_age_in_months(birth_date)
+        return age
 
 
 class RatingSerializer(serializers.ModelSerializer):
