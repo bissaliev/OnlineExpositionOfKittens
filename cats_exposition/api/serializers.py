@@ -74,6 +74,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
     cat = serializers.SlugRelatedField(read_only=True, slug_field="name")
     user = serializers.SlugRelatedField(read_only=True, slug_field="username")
+    score = serializers.IntegerField(required=True)
 
     class Meta:
         model = Rating
