@@ -27,7 +27,7 @@ class CatViewSet(ModelViewSet):
             0,
             output_field=IntegerField(),
         )
-    )
+    ).order_by("-rating_avg")
     serializer_class = CatSerializer
     permission_classes = (OwnerOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
