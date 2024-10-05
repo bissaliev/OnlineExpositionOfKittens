@@ -110,7 +110,7 @@ docker compose up --build
 
 Документация Swagger доступна по следующему пути:
 
-[http://localhost:8000/swagger/](http://localhost:8000/swagger/)
+[http://localhost/swagger/](http://localhost/swagger/)
 
 ### Автор
 
