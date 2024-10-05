@@ -85,7 +85,7 @@ class RatingSerializer(serializers.ModelSerializer):
             "score",
         )
 
-    def create(self, validated_data):  # TODO Убрать дублирование исключения
+    def create(self, validated_data):
         cat = validated_data.get("cat")
         user = self.context.get("request").user
         if user == cat.owner:

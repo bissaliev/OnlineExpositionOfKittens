@@ -15,19 +15,21 @@ from .serializers import (
     RatingSerializer,
 )
 
-# TODO Оптимизация ORM-запросов
-
 
 class CatViewSet(ModelViewSet):
     """ViewSet для работы с котиками."""
 
-    queryset = Cat.objects.annotate(
-        rating_avg=Coalesce(
-            Avg("ratings__score", distinct=True),
-            0,
-            output_field=IntegerField(),
+    queryset = (
+        Cat.objects.annotate(
+            rating_avg=Coalesce(
+                Avg("ratings__score", distinct=True),
+                0,
+                output_field=IntegerField(),
+            )
         )
-    ).order_by("-rating_avg")
+        .order_by("-rating_avg")
+        .select_related("breed", "owner")
+    )
     serializer_class = CatSerializer
     permission_classes = (OwnerOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
@@ -45,7 +47,6 @@ class CatViewSet(ModelViewSet):
 class BreedViewSet(ModelViewSet):
     """ViewSet для работы с породами котиков."""
 
-    # TODO Проверка работы пермишена
     queryset = Breed.objects.all()
     serializer_class = BreedSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -58,7 +59,7 @@ class RatingViewSet(ModelViewSet):
 
     def get_queryset(self):
         cat = get_object_or_404(Cat, pk=self.kwargs.get("cat_id"))
-        return cat.ratings.all()
+        return cat.ratings.select_related("cat", "user")
 
     def perform_create(self, serializer):
         cat = get_object_or_404(Cat, pk=self.kwargs.get("cat_id"))
