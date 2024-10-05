@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
@@ -39,3 +40,9 @@ urlpatterns += [
         name="schema-redoc",
     ),
 ]
+
+# У вас уже есть это условие
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += (path("__debug__/", include(debug_toolbar.urls)),)

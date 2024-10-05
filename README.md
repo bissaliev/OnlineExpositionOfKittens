@@ -106,11 +106,11 @@ cd infra/
 docker compose up --build
 ```
 
-[Перейти на сайт](http://localhost/)
+[Перейти на сайт](http://localhost/api/v1/cats/)
 
-Документация Swagger доступна по следующему пути:
+Документация доступна по следующему пути:
 
-[http://localhost/swagger/](http://localhost/swagger/)
+[http://localhost/api/v1/docs/](http://localhost/api/v1/docs/)
 
 ### Автор
 

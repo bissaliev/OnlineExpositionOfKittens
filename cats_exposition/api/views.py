@@ -39,7 +39,7 @@ class CatViewSet(ModelViewSet):
         serializer.save(owner=self.request.user)
 
     def get_serializer_class(self):
-        if self.request.method not in SAFE_METHODS:
+        if self.request and self.request.method not in SAFE_METHODS:
             return CatCreateSerializer
         return super().get_serializer_class()
 

@@ -1,4 +1,5 @@
 from django.urls import include, path
+from drf_yasg import openapi
 from rest_framework.routers import DefaultRouter
 
 from .views import BreedViewSet, CatViewSet, RatingViewSet
@@ -23,3 +24,15 @@ urlpatterns = [
 # auth/users/me/ - получить/обновить зарегистрированного пользователя
 # auth/jwt/create/ - создать токен
 # auth/jwt/refresh/ - получить новый токен по истечению времени жизни старого
+
+
+api_info = openapi.Info(
+    title="Cats Exposition API",  # Название вашего API
+    default_version="v1",  # Версия API
+    description="Документация для API выставки котов",  # Описание API
+    terms_of_service="https://www.example.com/terms/",  # Условия использования
+    contact=openapi.Contact(
+        email="support@example.com"
+    ),  # Контактная информация
+    license=openapi.License(name="BSD License"),  # Лицензия
+)
