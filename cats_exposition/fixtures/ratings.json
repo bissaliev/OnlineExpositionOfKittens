@@ -1,0 +1,56 @@
+[
+{
+    "model": "cats.rating",
+    "pk": 6,
+    "fields": {
+        "cat": 6,
+        "user": 2,
+        "score": 4
+    }
+},
+{
+    "model": "cats.rating",
+    "pk": 7,
+    "fields": {
+        "cat": 2,
+        "user": 3,
+        "score": 5
+    }
+},
+{
+    "model": "cats.rating",
+    "pk": 8,
+    "fields": {
+        "cat": 3,
+        "user": 3,
+        "score": 3
+    }
+},
+{
+    "model": "cats.rating",
+    "pk": 9,
+    "fields": {
+        "cat": 1,
+        "user": 2,
+        "score": 5
+    }
+},
+{
+    "model": "cats.rating",
+    "pk": 10,
+    "fields": {
+        "cat": 4,
+        "user": 3,
+        "score": 2
+    }
+},
+{
+    "model": "cats.rating",
+    "pk": 11,
+    "fields": {
+        "cat": 1,
+        "user": 4,
+        "score": 3
+    }
+}
+]

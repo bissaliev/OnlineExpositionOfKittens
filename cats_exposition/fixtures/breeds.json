@@ -1,0 +1,79 @@
+[
+{
+    "model": "cats.breed",
+    "pk": 1,
+    "fields": {
+        "name": "Британские короткошерстные"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 2,
+    "fields": {
+        "name": "Шотландская вислоухая"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 3,
+    "fields": {
+        "name": "Мейн-кун"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 4,
+    "fields": {
+        "name": "Бенгальская кошка"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 5,
+    "fields": {
+        "name": "Сиамская кошка"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 6,
+    "fields": {
+        "name": "Абиссинская кошка"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 7,
+    "fields": {
+        "name": "Сибирская кошка"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 8,
+    "fields": {
+        "name": "Персидская кошка"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 9,
+    "fields": {
+        "name": "Бирманская кошка"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 10,
+    "fields": {
+        "name": "Дворняшка"
+    }
+},
+{
+    "model": "cats.breed",
+    "pk": 11,
+    "fields": {
+        "name": "Сфинкс"
+    }
+}
+]

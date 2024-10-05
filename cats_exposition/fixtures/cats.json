@@ -1,0 +1,134 @@
+[
+{
+    "model": "cats.cat",
+    "pk": 1,
+    "fields": {
+        "name": "Барсик",
+        "color": "Серый",
+        "birth_date": "2016-07-02",
+        "description": "Сырый котик2",
+        "owner": 3,
+        "breed": 1
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 2,
+    "fields": {
+        "name": "Рыжик",
+        "color": "Рыжий",
+        "birth_date": "2020-03-18",
+        "description": "Рыжий котик",
+        "owner": 2,
+        "breed": 3
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 3,
+    "fields": {
+        "name": "Пушистик",
+        "color": "Белый",
+        "birth_date": "2022-03-18",
+        "description": "Белый котик",
+        "owner": 2,
+        "breed": 4
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 4,
+    "fields": {
+        "name": "Мистер White",
+        "color": "Белый",
+        "birth_date": "2014-03-18",
+        "description": "Белый котик",
+        "owner": 2,
+        "breed": 2
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 6,
+    "fields": {
+        "name": "Мистер Brawn",
+        "color": "Коричневый",
+        "birth_date": "2022-11-20",
+        "description": "Коричневый котик",
+        "owner": 3,
+        "breed": 8
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 7,
+    "fields": {
+        "name": "Мистер Пушистик",
+        "color": "Белый",
+        "birth_date": "2018-11-20",
+        "description": "Белый котик",
+        "owner": 2,
+        "breed": 8
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 8,
+    "fields": {
+        "name": "Бегемот",
+        "color": "Черный",
+        "birth_date": "2018-02-20",
+        "description": "Белый котик",
+        "owner": 2,
+        "breed": null
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 9,
+    "fields": {
+        "name": "Адольф",
+        "color": "Белый",
+        "birth_date": "2018-02-01",
+        "description": "Белый котик",
+        "owner": 2,
+        "breed": 8
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 10,
+    "fields": {
+        "name": "Феликс",
+        "color": "Белый",
+        "birth_date": "2018-02-01",
+        "description": "Белый котик",
+        "owner": 2,
+        "breed": 8
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 11,
+    "fields": {
+        "name": "Пират",
+        "color": "Черный",
+        "birth_date": "2023-10-03",
+        "description": "Одноглазый пират",
+        "owner": 2,
+        "breed": 5
+    }
+},
+{
+    "model": "cats.cat",
+    "pk": 12,
+    "fields": {
+        "name": "Вискас",
+        "color": "Белый",
+        "birth_date": "2018-02-01",
+        "description": "Белый котик",
+        "owner": 3,
+        "breed": 8
+    }
+}
+]

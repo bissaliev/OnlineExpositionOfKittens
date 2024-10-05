@@ -1,0 +1,74 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$BZ9UDFfDGjPzUame2enuwH$3pNCIA71nz5nVZ1DgPkxJtJV909I8K3VNJFkRSu8qAY=",
+        "last_login": "2024-10-05T04:08:51.566Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@admin.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-10-01T03:27:31.223Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$sHKGA3rLcInRefz3taOB0T$nRWaTND5vFodqdkwUigFGdfH2WPeS3pLXCD2+x0f3oU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "oleg",
+        "first_name": "",
+        "last_name": "",
+        "email": "bissaliev@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-10-01T03:31:55.849Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$etSlI0fQpkTii6MnGU7zwM$W0dNSVJhyU33b77F1PgqYNbDxE4hPIunRDHyrZ8YEEc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "owner_1",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-10-05T04:10:12.382Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$yUpRAMslZxSUfaDpzoQOJE$bTDhn/sIdaSwo41b2I/yUiPj7J1Y+jjPoR9UeogYpmU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "owner_2",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-10-05T04:10:38Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
