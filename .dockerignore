@@ -1,0 +1,10 @@
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+
+**/local_settings.py
+
+**/db.sqlite3
+
+.git/
+.gitignore
