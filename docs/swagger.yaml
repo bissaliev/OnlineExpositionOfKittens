@@ -1,0 +1,1077 @@
+swagger: "2.0"
+info:
+    title: Cats Exposition API
+    description: Документация для API выставки котов
+    termsOfService: https://www.example.com/terms/
+    contact:
+        email: support@example.com
+    license:
+        name: BSD License
+    version: "1.0"
+host: localhost:8000
+schemes:
+    - http
+basePath: /api/v1
+consumes:
+    - application/json
+produces:
+    - application/json
+securityDefinitions:
+    Bearer:
+        type: apiKey
+        name: Authorization
+        in: header
+security:
+    - Bearer: []
+paths:
+    /auth/jwt/create/:
+        post:
+            operationId: auth_jwt_create_create
+            description: |-
+                Takes a set of user credentials and returns an access and refresh JSON web
+                token pair to prove the authentication of those credentials.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/TokenObtainPair"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/TokenObtainPair"
+            tags:
+                - auth
+        parameters: []
+    /auth/jwt/refresh/:
+        post:
+            operationId: auth_jwt_refresh_create
+            description: |-
+                Takes a refresh type JSON web token and returns an access type JSON web
+                token if the refresh token is valid.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/TokenRefresh"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/TokenRefresh"
+            tags:
+                - auth
+        parameters: []
+    /auth/jwt/verify/:
+        post:
+            operationId: auth_jwt_verify_create
+            description: |-
+                Takes a token and indicates if it is valid.  This view provides no
+                information about a token's fitness for a particular use.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/TokenVerify"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/TokenVerify"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/:
+        get:
+            operationId: auth_users_list
+            description: ""
+            parameters:
+                - name: page
+                  in: query
+                  description: A page number within the paginated result set.
+                  required: false
+                  type: integer
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        required:
+                            - count
+                            - results
+                        type: object
+                        properties:
+                            count:
+                                type: integer
+                            next:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            previous:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            results:
+                                type: array
+                                items:
+                                    $ref: "#/definitions/User"
+            tags:
+                - auth
+        post:
+            operationId: auth_users_create
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/UserCreate"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/UserCreate"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/activation/:
+        post:
+            operationId: auth_users_activation
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Activation"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Activation"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/me/:
+        get:
+            operationId: auth_users_me_read
+            description: ""
+            parameters:
+                - name: page
+                  in: query
+                  description: A page number within the paginated result set.
+                  required: false
+                  type: integer
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        required:
+                            - count
+                            - results
+                        type: object
+                        properties:
+                            count:
+                                type: integer
+                            next:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            previous:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            results:
+                                type: array
+                                items:
+                                    $ref: "#/definitions/User"
+            tags:
+                - auth
+        put:
+            operationId: auth_users_me_update
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/User"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/User"
+            tags:
+                - auth
+        patch:
+            operationId: auth_users_me_partial_update
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/User"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/User"
+            tags:
+                - auth
+        delete:
+            operationId: auth_users_me_delete
+            description: ""
+            parameters: []
+            responses:
+                "204":
+                    description: ""
+            tags:
+                - auth
+        parameters: []
+    /auth/users/resend_activation/:
+        post:
+            operationId: auth_users_resend_activation
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/SendEmailReset"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/SendEmailReset"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/reset_password/:
+        post:
+            operationId: auth_users_reset_password
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/SendEmailReset"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/SendEmailReset"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/reset_password_confirm/:
+        post:
+            operationId: auth_users_reset_password_confirm
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/PasswordResetConfirm"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/PasswordResetConfirm"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/reset_username/:
+        post:
+            operationId: auth_users_reset_username
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/SendEmailReset"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/SendEmailReset"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/reset_username_confirm/:
+        post:
+            operationId: auth_users_reset_username_confirm
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/UsernameResetConfirm"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/UsernameResetConfirm"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/set_password/:
+        post:
+            operationId: auth_users_set_password
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/SetPassword"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/SetPassword"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/set_username/:
+        post:
+            operationId: auth_users_set_username
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/SetUsername"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/SetUsername"
+            tags:
+                - auth
+        parameters: []
+    /auth/users/{id}/:
+        get:
+            operationId: auth_users_read
+            description: ""
+            parameters: []
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/User"
+            tags:
+                - auth
+        put:
+            operationId: auth_users_update
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/User"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/User"
+            tags:
+                - auth
+        patch:
+            operationId: auth_users_partial_update
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/User"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/User"
+            tags:
+                - auth
+        delete:
+            operationId: auth_users_delete
+            description: ""
+            parameters: []
+            responses:
+                "204":
+                    description: ""
+            tags:
+                - auth
+        parameters:
+            - name: id
+              in: path
+              description: A unique integer value identifying this пользователь.
+              required: true
+              type: integer
+    /breeds/:
+        get:
+            operationId: breeds_list
+            description: ViewSet для работы с породами котиков.
+            parameters:
+                - name: page
+                  in: query
+                  description: A page number within the paginated result set.
+                  required: false
+                  type: integer
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        required:
+                            - count
+                            - results
+                        type: object
+                        properties:
+                            count:
+                                type: integer
+                            next:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            previous:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            results:
+                                type: array
+                                items:
+                                    $ref: "#/definitions/Breed"
+            tags:
+                - breeds
+        post:
+            operationId: breeds_create
+            description: ViewSet для работы с породами котиков.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Breed"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Breed"
+            tags:
+                - breeds
+        parameters: []
+    /breeds/{id}/:
+        get:
+            operationId: breeds_read
+            description: ViewSet для работы с породами котиков.
+            parameters: []
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Breed"
+            tags:
+                - breeds
+        put:
+            operationId: breeds_update
+            description: ViewSet для работы с породами котиков.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Breed"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Breed"
+            tags:
+                - breeds
+        patch:
+            operationId: breeds_partial_update
+            description: ViewSet для работы с породами котиков.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Breed"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Breed"
+            tags:
+                - breeds
+        delete:
+            operationId: breeds_delete
+            description: ViewSet для работы с породами котиков.
+            parameters: []
+            responses:
+                "204":
+                    description: ""
+            tags:
+                - breeds
+        parameters:
+            - name: id
+              in: path
+              description: A unique integer value identifying this Порода.
+              required: true
+              type: integer
+    /cats/:
+        get:
+            operationId: cats_list
+            description: ViewSet для работы с котиками.
+            parameters:
+                - name: breed
+                  in: query
+                  description: breed
+                  required: false
+                  type: string
+                - name: color
+                  in: query
+                  description: color
+                  required: false
+                  type: string
+                - name: owner
+                  in: query
+                  description: owner
+                  required: false
+                  type: string
+                - name: rating
+                  in: query
+                  description: rating
+                  required: false
+                  type: string
+                - name: page
+                  in: query
+                  description: A page number within the paginated result set.
+                  required: false
+                  type: integer
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        required:
+                            - count
+                            - results
+                        type: object
+                        properties:
+                            count:
+                                type: integer
+                            next:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            previous:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            results:
+                                type: array
+                                items:
+                                    $ref: "#/definitions/Cat"
+            tags:
+                - cats
+        post:
+            operationId: cats_create
+            description: ViewSet для работы с котиками.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/CatCreate"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/CatCreate"
+            tags:
+                - cats
+        parameters: []
+
+    /cats/{id}/:
+        get:
+            operationId: cats_read
+            description: ViewSet для работы с котиками.
+            parameters: []
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Cat"
+            tags:
+                - cats
+        put:
+            operationId: cats_update
+            description: ViewSet для работы с котиками.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/CatCreate"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/CatCreate"
+            tags:
+                - cats
+        patch:
+            operationId: cats_partial_update
+            description: ViewSet для работы с котиками.
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/CatCreate"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/CatCreate"
+            tags:
+                - cats
+        delete:
+            operationId: cats_delete
+            description: ViewSet для работы с котиками.
+            parameters: []
+            responses:
+                "204":
+                    description: ""
+            tags:
+                - cats
+        parameters:
+            - name: id
+              in: path
+              description: A unique integer value identifying this Котик.
+              required: true
+              type: integer
+
+    /cats/{cat_id}/rating/:
+        get:
+            operationId: cats_rating_list
+            description: ""
+            parameters:
+                - name: page
+                  in: query
+                  description: A page number within the paginated result set.
+                  required: false
+                  type: integer
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        required:
+                            - count
+                            - results
+                        type: object
+                        properties:
+                            count:
+                                type: integer
+                            next:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            previous:
+                                type: string
+                                format: uri
+                                x-nullable: true
+                            results:
+                                type: array
+                                items:
+                                    $ref: "#/definitions/Rating"
+            tags:
+                - ratings
+        post:
+            operationId: cats_rating_create
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Rating"
+            responses:
+                "201":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Rating"
+            tags:
+                - ratings
+        parameters:
+            - name: cat_id
+              in: path
+              required: true
+              type: string
+
+    /cats/{cat_id}/rating/{id}/:
+        get:
+            operationId: cats_rating_read
+            description: ""
+            parameters: []
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Rating"
+            tags:
+                - ratings
+        put:
+            operationId: cats_rating_update
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Rating"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Rating"
+            tags:
+                - ratings
+        patch:
+            operationId: cats_rating_partial_update
+            description: ""
+            parameters:
+                - name: data
+                  in: body
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Rating"
+            responses:
+                "200":
+                    description: ""
+                    schema:
+                        $ref: "#/definitions/Rating"
+            tags:
+                - ratings
+        delete:
+            operationId: cats_rating_delete
+            description: ""
+            parameters: []
+            responses:
+                "204":
+                    description: ""
+            tags:
+                - ratings
+        parameters:
+            - name: cat_id
+              in: path
+              required: true
+              type: string
+            - name: id
+              in: path
+              description: A unique integer value identifying this Рейтинг.
+              required: true
+              type: integer
+
+definitions:
+    TokenObtainPair:
+        required:
+            - username
+            - password
+        type: object
+        properties:
+            username:
+                title: Username
+                type: string
+                minLength: 1
+            password:
+                title: Password
+                type: string
+                minLength: 1
+    TokenRefresh:
+        required:
+            - refresh
+        type: object
+        properties:
+            refresh:
+                title: Refresh
+                type: string
+                minLength: 1
+            access:
+                title: Access
+                type: string
+                readOnly: true
+                minLength: 1
+    TokenVerify:
+        required:
+            - token
+        type: object
+        properties:
+            token:
+                title: Token
+                type: string
+                minLength: 1
+    User:
+        type: object
+        properties:
+            email:
+                title: Адрес электронной почты
+                type: string
+                format: email
+                maxLength: 254
+            id:
+                title: ID
+                type: integer
+                readOnly: true
+            username:
+                title: Имя пользователя
+                description:
+                    Обязательное поле. Не более 150 символов. Только буквы, цифры
+                    и символы @/./+/-/_.
+                type: string
+                readOnly: true
+                minLength: 1
+    UserCreate:
+        required:
+            - username
+            - password
+        type: object
+        properties:
+            email:
+                title: Адрес электронной почты
+                type: string
+                format: email
+                maxLength: 254
+            username:
+                title: Имя пользователя
+                description:
+                    Обязательное поле. Не более 150 символов. Только буквы, цифры
+                    и символы @/./+/-/_.
+                type: string
+                pattern: ^[\w.@+-]+$
+                maxLength: 150
+                minLength: 1
+            id:
+                title: ID
+                type: integer
+                readOnly: true
+            password:
+                title: Password
+                type: string
+                minLength: 1
+    Activation:
+        required:
+            - uid
+            - token
+        type: object
+        properties:
+            uid:
+                title: Uid
+                type: string
+                minLength: 1
+            token:
+                title: Token
+                type: string
+                minLength: 1
+    SendEmailReset:
+        required:
+            - email
+        type: object
+        properties:
+            email:
+                title: Email
+                type: string
+                format: email
+                minLength: 1
+    PasswordResetConfirm:
+        required:
+            - uid
+            - token
+            - new_password
+        type: object
+        properties:
+            uid:
+                title: Uid
+                type: string
+                minLength: 1
+            token:
+                title: Token
+                type: string
+                minLength: 1
+            new_password:
+                title: New password
+                type: string
+                minLength: 1
+    UsernameResetConfirm:
+        required:
+            - new_username
+        type: object
+        properties:
+            new_username:
+                title: Имя пользователя
+                description:
+                    Обязательное поле. Не более 150 символов. Только буквы, цифры
+                    и символы @/./+/-/_.
+                type: string
+                pattern: ^[\w.@+-]+$
+                maxLength: 150
+                minLength: 1
+    SetPassword:
+        required:
+            - new_password
+            - current_password
+        type: object
+        properties:
+            new_password:
+                title: New password
+                type: string
+                minLength: 1
+            current_password:
+                title: Current password
+                type: string
+                minLength: 1
+    SetUsername:
+        required:
+            - current_password
+            - new_username
+        type: object
+        properties:
+            current_password:
+                title: Current password
+                type: string
+                minLength: 1
+            new_username:
+                title: Имя пользователя
+                description:
+                    Обязательное поле. Не более 150 символов. Только буквы, цифры
+                    и символы @/./+/-/_.
+                type: string
+                pattern: ^[\w.@+-]+$
+                maxLength: 150
+                minLength: 1
+    Breed:
+        required:
+            - name
+        type: object
+        properties:
+            id:
+                title: ID
+                type: integer
+                readOnly: true
+            name:
+                title: Название породы
+                type: string
+                maxLength: 150
+                minLength: 1
+    Cat:
+        required:
+            - name
+            - color
+            - breed
+            - description
+            - rating
+        type: object
+        properties:
+            id:
+                title: ID
+                type: integer
+                readOnly: true
+            name:
+                title: Имя котика
+                type: string
+                maxLength: 150
+                minLength: 1
+            color:
+                title: Цвет котика
+                type: string
+                maxLength: 150
+                minLength: 1
+            breed:
+                title: Breed
+                type: string
+            description:
+                title: Описание котика
+                type: string
+                minLength: 1
+            owner:
+                title: Owner
+                type: string
+                pattern: ^[\w.@+-]+$
+                readOnly: true
+                default: ""
+            age:
+                title: Age
+                type: string
+                readOnly: true
+            rating:
+                title: Rating
+                type: integer
+    CatCreate:
+        required:
+            - name
+            - color
+            - breed
+            - description
+            - birth_date
+        type: object
+        properties:
+            id:
+                title: ID
+                type: integer
+                readOnly: true
+            name:
+                title: Имя котика
+                type: string
+                maxLength: 150
+                minLength: 1
+            color:
+                title: Цвет котика
+                type: string
+                maxLength: 150
+                minLength: 1
+            breed:
+                title: Breed
+                type: string
+            description:
+                title: Описание котика
+                type: string
+                minLength: 1
+            owner:
+                title: Owner
+                type: string
+                pattern: ^[\w.@+-]+$
+                readOnly: true
+                default: ""
+            birth_date:
+                title: Дата рождения котика
+                type: string
+                format: date
+    Rating:
+        required:
+            - score
+        type: object
+        properties:
+            id:
+                title: ID
+                type: integer
+                readOnly: true
+            cat:
+                title: Cat
+                type: string
+                readOnly: true
+            user:
+                title: User
+                type: string
+                pattern: ^[\w.@+-]+$
+                readOnly: true
+            score:
+                title: Score
+                type: integer
